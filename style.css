@@ -1,0 +1,86 @@
+
+html,body, .content {
+  width: 100%;
+}
+
+.content {
+  max-width: 1200px; /* PCなど広い画面では最大1200pxで止める */
+}
+
+
+/* スマホなどの小さい画面用 */
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}
+
+h3 {
+  width:200px;
+  padding: 1rem 3rem;
+  color: #fff;
+  border-radius: 100vh;
+  background-image: -webkit-gradient(linear, right top, left top, from(#9be15d), to(#00e3ae));
+  background-image: -webkit-linear-gradient(right, #9be15d 0%, #00e3ae 100%);
+  background-image: linear-gradient(to left, #9be15d 0%, #00e3ae 100%);
+}
+
+table {
+  border-radius:10px;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border:1px solid #666;
+  border-spacing: 0;
+  overflow:hidden;
+}
+
+tr {
+  height: 30px;
+}
+
+.table1 {
+  width: 380px;
+}
+
+.table2 {
+  width: 100px;
+}
+
+.table3 {
+  width: 380px;
+}
+
+.tab1 {
+  color: white;
+  background-color: gray;
+  width: 100px;
+}
+
+.tab2 {
+  color: white;
+  background-color: gray;
+  width: 100px;
+}
+
+.tab3 {
+  color: white;
+  background-color: gray;
+  width: 60px;
+}
+
+.pull {
+  font-size: 30px;
+  height: 60px;
+  width: 150px;
+  text-align: center;
+  border-radius:20px;
+  -webkit-border-radius:20px;
+  -moz-border-radius:20px;
+  border:1px solid #666;
+  border-spacing: 0;
+  overflow:hidden;
+}
+
+.image {
+  max-width: 640px;
+}

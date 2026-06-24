@@ -1,239 +1,32 @@
 <!DOCTYPE html>
-<link rel="stylesheet" href="style.css">
 <html>
-  <script>
-  
-  function loadingProcess(){
-    //サーバーからスプレッドシートのデータを取得する
-    google.script.run.withSuccessHandler(dispSpreadsheet).GetSpreadsheet("タジマ",1);
-  }
-  window.addEventListener('load', loadingProcess);
-
-  window.onload = function() {
-    google.script.run.withSuccessHandler(createPulldown).getOptionsFromSheet("エリア");
-    google.script.run.withSuccessHandler(createPulldownNumber).getOptionsFromSheet("タジマ");
-  };
-
-  function checkImageExists(url) {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => resolve(true);  // 画像が存在する
-      img.onerror = () => resolve(false); // 画像が存在しない、またはエラー
-      img.src = url;
-    });
-  }
-
-  //取得したデータを表示する
-  function dispSpreadsheet(spreadsheet_data){
-    var htmlTable = '<img src="';
-
-    document.getElementById("item_1").innerHTML = spreadsheet_data[0][1];
-    document.getElementById("item_2").innerHTML = spreadsheet_data[0][2];
-    document.getElementById("item_3").innerHTML = spreadsheet_data[0][3];
-    document.getElementById("item_4").innerHTML = spreadsheet_data[0][4];
-
-    document.getElementById("item_5").innerHTML = spreadsheet_data[0][5];
-    document.getElementById("item_10").innerHTML = spreadsheet_data[0][5];
-    document.getElementById("item_11").innerHTML = spreadsheet_data[0][6];
-    document.getElementById("item_12").innerHTML = spreadsheet_data[0][7];
-    document.getElementById("item_13").innerHTML = spreadsheet_data[0][8];
-    document.getElementById("item_14").innerHTML = spreadsheet_data[0][9];
-    document.getElementById("item_15").innerHTML = spreadsheet_data[0][10];
-    document.getElementById("item_16").innerHTML = spreadsheet_data[0][11];
-    document.getElementById("item_17").innerHTML = spreadsheet_data[0][12];
-
-    htmlTable += spreadsheet_data[0][16];
-    htmlTable += '" width=100% alt="">'
-    document.getElementById("item_20").innerHTML = htmlTable;
-
-    htmlTable = '<img src="';
-    htmlTable += spreadsheet_data[0][17];
-    htmlTable += '" width=100% alt="">'
-    document.getElementById("item_21").innerHTML = htmlTable;
-    checkImageExists(spreadsheet_data[0][19]).then(exists => {
-      if (exists) {
-        document.getElementById("show1").style.display = "block";
-        console.log('画像が存在します');
-        htmlTable = '<img src="';
-        htmlTable += spreadsheet_data[0][19];
-        htmlTable += '" width=100% alt="">'
-        document.getElementById("item_31").innerHTML = htmlTable;
-      } else {
-        document.getElementById("show1").style.display = "none";
-        console.log('画像が存在しません');
-      }
-    });
-    checkImageExists(spreadsheet_data[0][20]).then(exists => {
-      if (exists) {
-        document.getElementById("show2").style.display = "block";
-        htmlTable = '<img src="';
-        htmlTable += spreadsheet_data[0][20];
-        htmlTable += '" width=100% alt="">'
-        document.getElementById("item_32").innerHTML = htmlTable;
-      } else {
-        document.getElementById("show2").style.display = "none";
-      }
-    });
-
-    checkImageExists(spreadsheet_data[0][21]).then(exists => {
-      if (exists) {
-        document.getElementById("show3").style.display = "block";
-        htmlTable = '<img src="';
-        htmlTable += spreadsheet_data[0][21];
-        htmlTable += '" width=100% alt="">'
-        document.getElementById("item_33").innerHTML = htmlTable;
-      } else {
-        document.getElementById("show3").style.display = "none";
-      }
-    });
-
-    checkImageExists(spreadsheet_data[0][22]).then(exists => {
-      if (exists) {
-        document.getElementById("show4").style.display = "block";
-        htmlTable = '<img src="';
-        htmlTable += spreadsheet_data[0][22];
-        htmlTable += '" width=100% alt="">'
-        document.getElementById("item_34").innerHTML = htmlTable;
-      } else {
-        document.getElementById("show4").style.display = "none";
-      }
-    });
-  }
-  function createPulldown(options) {
-    const select = document.getElementById('pulldown_area');
-    options.forEach(function(item) {
-      const option = document.createElement('option');
-      option.value = item;
-      option.textContent = item;
-      select.appendChild(option);
-    });
-  }
-  function createPulldownNumber(options) {
-    const select = document.getElementById('pulldown_num');
-    select.innerHTML = '';
-    options.forEach(function(item) {
-      const option = document.createElement('option');
-      option.value = item;
-      option.textContent = item;
-      select.appendChild(option);
-    });
-  }
-  function selectArea() {
-    const area = document.getElementById('pulldown_area').value;
-    var num = document.getElementById('pulldown_num').value;
-    console.log("change area:"+area+"-"+num);
-    google.script.run.withSuccessHandler(createPulldownNumber).getOptionsFromSheet(area);
-    google.script.run.withSuccessHandler(dispSpreadsheet).GetSpreadsheet(area,Number(num));
-  }
-    function selectNumber() {
-    const area = document.getElementById('pulldown_area').value;
-    var num = document.getElementById('pulldown_num').value;
-    console.log("change num:"+area+"-"+num);
-    google.script.run.withSuccessHandler(dispSpreadsheet).GetSpreadsheet(area,Number(num));
-  }
-  </script>
-  
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <base target="_top">
     <style>
-      <?!= include('css'); ?>
+    * {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height:100vh;
+    }
+    iframe {
+      border:none;
+      width:100%;
+      height:100%;
+    }
     </style>
   </head>
+  <script>
+    window.onload = (e) => {
+        const gasappurl = 'https://script.google.com/macros/s/AKfycbxplhZIiMKZI8_m2anN3EbzH2uXwwWp4Cq502MLp3xtcPprNc5gZeX8XxIjpqrh140P/exec'
+        let ifm = document.getElementById('gasiframe')
+        ifm.src = gasappurl + window.location.search
+    }
+  </script>
   <body>
-    <div class="content">
-      <select class="pull" id="pulldown_area" onchange="selectArea()">
-      </select>
-      <select class="pull" id="pulldown_num" onchange="selectNumber()">
-      </select>
-
-      <br>
-      <br>
-      <table class="table1" border="1">
-        <tr>
-          <th class="tab1">分類</th>
-          <th id="item_1">分類</th>
-        </tr>
-        <tr>
-          <th class="tab1">地区</th>
-          <th id="item_2">地区</th>
-        </tr>
-        <tr>
-          <th class="tab1">水田地番</th>
-          <th id="item_3">水田地番</th>
-        </tr>
-        <tr>
-          <th class="tab1">栽培者</th>
-          <th id="item_4">栽培者</th>
-        </tr>
-      </table>
-      <br>
-      <table class="table2" border="1">
-        <tr>
-          <th class="tab2">RC面積</th>
-        </tr>
-        <tr>
-          <th id="item_5">300</th>
-        </tr>
-      </table>
-      <table class="table3" border="1">
-        <tr>
-          <th class="tab3">北長</th>
-          <th class="tab3">北幅</th>
-          <th class="tab3">東長</th>
-          <th class="tab3">東幅</th>
-          <th class="tab3">南長</th>
-          <th class="tab3">南幅</th>
-          <th class="tab3">西長</th>
-          <th class="tab3">西幅</th>
-        </tr>
-        <tr>
-          <th id="item_10">10</th>
-          <th id="item_11">20</th>
-          <th id="item_12">30</th>
-          <th id="item_13">40</th>
-          <th id="item_14">50</th>
-          <th id="item_15">60</th>
-          <th id="item_16">70</th>
-          <th id="item_17">80</th>
-        </tr>
-      </table>
-      <br>
-      <h3>地図写真</h3>
-      <div class="image" id="item_20">
-         <img src="map\m00101.jpg" width=100% alt="">
-      </div>
-      <br>
-      <h3>作業図面</h3>
-      <div class="image" id="item_21">
-        <img src="map\m00101.jpg" width=100% alt="">
-      </div>
-      <div id="show1">
-        <h3>現場写真1</h3>
-        <div class="image" id="item_31">
-          <img src="map\m00101.jpg" width=100% alt="">
-        </div>
-      </div>
-      <div id="show2">
-        <br>
-        <h3>現場写真2</h3>
-        <div class="image" id="item_32">
-          <img src="map\m00101.jpg" width=100% alt="">
-        </div>
-      </div>
-      <div id="show3">
-        <br>
-        <h3>現場写真3</h3>
-        <div class="image" id="item_33">
-          <img src="map\m00101.jpg" width=100% alt="">
-        </div>
-      </div>
-      <div id="show4">
-        <br>
-        <h3>現場写真4</h3>
-        <div class="image" id="item_33">
-          <img src="map\m00101.jpg" width=100% alt="">
-        </div>
-      </div>
-		</div>
+  <div class="container">
+    <iframe id="gasiframe" src="about:blank"></iframe>
+  </div>
   </body>
 </html>
